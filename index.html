@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Calendar & Schedule</title>
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="app">
+        <header class="app__header">
+            <h1 class="app__title"><span style="font-size: 24px;">📅</span>Calendar</h1>
+        </header>
+
+        <main class="widget">
+            <!-- Calendar -->
+            <section class="calendar" aria-label="Calendar">
+                <div class="calendar__month">
+                    <button class="icon-btn" id="prevMonthBtn" aria-label="Previous month">
+                        <span class="material-icons">keyboard_arrow_left</span>
+                    </button>
+                    <h2 class="calendar__month-text" id="monthLabel" aria-live="polite"></h2>
+                    <button class="icon-btn" id="nextMonthBtn" aria-label="Next month">
+                        <span class="material-icons">keyboard_arrow_right</span>
+                    </button>
+                </div>
+
+                <div class="calendar__grid">
+                    <div class="calendar__dow">S</div>
+                    <div class="calendar__dow">M</div>
+                    <div class="calendar__dow">T</div>
+                    <div class="calendar__dow">W</div>
+                    <div class="calendar__dow">T</div>
+                    <div class="calendar__dow">F</div>
+                    <div class="calendar__dow">S</div>
+
+                    <div id="daysGrid" class="calendar__days" role="grid" aria-label="Days of month"></div>
+                </div>
+            </section>
+
+            <!-- Schedule -->
+            <section class="schedule" aria-label="Schedule">
+                <div class="schedule__title">
+                    <h2 class="schedule__title-text">Schedule</h2>
+                    <p class="schedule__title-date" id="selectedDateLabel"></p>
+                </div>
+
+                <div class="schedule__content">
+                    <ul class="events" id="eventsList" aria-live="polite"></ul>
+
+                    <div class="schedule__form-wrapper">
+                        <form id="eventForm" class="schedule__form" autocomplete="off">
+                            <div class="form-row">
+                                <label for="eventTime">Time</label>
+                                <input id="eventTime" class="input" name="time" type="time" required />
+                            </div>
+                            <div class="form-row">
+                                <label for="eventTitle">Event</label>
+                                <input id="eventTitle" class="input" name="title" type="text"
+                                    placeholder="What’s happening?" required />
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn--primary">
+                                    <span class="material-icons btn__icon">add</span>
+                                    Add Event
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app__footer">
+            <button id="todayBtn" class="btn btn--ghost">Today</button>
+            <button id="clearAllBtn" class="btn btn--ghost">Clear All Events</button>
+        </footer>
+    </div>
+
+    <!-- App logic -->
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,446 @@
+:root{
+  /* Core palette */
+  --blue-25: #f8fbff;
+  --blue-50: #f1f6ff;
+  --blue-75: #eaf2ff;
+  --blue-100: #e3eeff;
+  --blue-150: #d7e6ff;
+  --blue-200: #c9dcff;
+  --blue-300: #9fbdf8;
+  --blue-400: #5b8def;
+  --blue-500: #98f390;
+  --blue-600: #1e5ae6;
+  --blue-700: #174dcc;
+  --blue-800: #0d2e7a;
+  
+
+  --ink: #0b2b5f;
+  --ink-soft: rgba(11, 43, 95, 0.75);
+  --bg: #ffffff;
+
+  /* Card styling */
+  --radius: 16px;
+  --radius-sm: 12px;
+  --shadow: 0 12px 30px rgba(17, 66, 178, 0.16);
+  --shadow-sm: 0 6px 16px rgba(17, 66, 178, 0.12);
+  --border: 1px solid rgba(47,111,237,0.16);
+
+  /* Optional custom hero background image: replace with your image path if desired */
+  /* Example: url('/assets/hero.jpg') or leave empty to rely on gradients only */
+  --hero-image: url('/assets/hero.jpg');
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  color: var(--ink);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Beautiful layered background:
+   - Hero image (optional; if missing it gracefully falls back to gradients)
+   - Soft radial glows and a base gradient underlay
+*/
+body {
+  background:
+    radial-gradient(1200px 700px at -10% -10%, rgba(47,111,237,0.18), transparent 60%),
+    radial-gradient(900px 600px at 110% 10%, rgba(30,90,230,0.14), transparent 62%),
+    radial-gradient(800px 500px at 110% 100%, rgba(17,66,178,0.12), transparent 60%),
+    var(--hero-image),
+    linear-gradient(180deg, var(--blue-50), #ffffff);
+  background-size: auto, auto, auto, cover, auto;
+  background-position: center, center, center, center, center;
+  background-attachment: fixed, fixed, fixed, fixed, fixed;
+}
+
+/* Fine dotted pattern for subtle texture */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    url('https://cdn.pixabay.com/photo/2012/04/14/16/37/sky-34536_1280.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  opacity: 0.5;
+  mix-blend-mode: normal;
+  z-index: 0;
+}
+
+.app {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 28px auto;
+  padding: 0 18px 28px;
+}
+
+.app__header, .app__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px 0 18px;
+}
+
+.app__title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--ink);
+  letter-spacing: 0.2px;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+}
+
+/* Layout */
+.widget {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 26px;
+}
+@media (max-width: 960px) {
+  .widget { grid-template-columns: 1fr; }
+}
+
+/* Glass cards */
+.calendar, .schedule {
+  background: rgba(255,255,255,0.78);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  border: var(--border);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+/* Calendar header */
+.calendar__month {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.calendar__month-text {
+  text-align: center;
+  margin: 0;
+  font-size: 19px;
+  font-weight: 900;
+  color: var(--ink);
+}
+
+/* DOW + Days grid wrapper */
+.calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-auto-rows: auto;
+  column-gap: 10px;
+  row-gap: 10px;
+}
+
+/* Days-of-week header (first 7 children) */
+.calendar__dow {
+  color: var(--blue-800);
+  font-weight: 900;
+  font-size: 12px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 8px 0;
+  letter-spacing: 0.6px;
+  border-radius: 10px;
+  background: rgba(233, 241, 255, 0.6);
+  border: 1px solid rgba(47,111,237,0.12);
+}
+
+/* Days grid spans entire width on the next row */
+.calendar__days {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 10px;
+  /* Important: Fix row heights to avoid overlap */
+  grid-auto-rows: minmax(96px, auto);
+}
+
+/* Day cells */
+.day {
+  appearance: none;
+  width: 100%;
+  border: 0;
+  background: linear-gradient(180deg, var(--blue-100), var(--blue-50));
+  border-radius: var(--radius-sm);
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  cursor: pointer;
+  border: 1px solid rgba(47,111,237,0.18);
+  transition: background .2s ease, border-color .2s ease, box-shadow .2s ease, transform .06s ease;
+  box-shadow: var(--shadow-sm);
+  color: var(--ink);
+  text-align: left;
+  overflow: hidden; /* prevents visual overflow in tight layouts */
+}
+.day:hover { background: linear-gradient(180deg, var(--blue-150), var(--blue-75)); }
+.day:active { transform: translateY(1px); }
+.day:focus-visible {
+  outline: none;
+  border-color: var(--blue-500);
+  box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.22);
+}
+
+.day__num {
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Weekend highlight (still subtle) */
+.calendar__days .day:nth-child(7n),
+.calendar__days .day:nth-child(7n+1) {
+  background: linear-gradient(180deg, #edf3ff, #f8fbff);
+}
+
+/* Out-of-month days */
+.day.is-outside {
+  opacity: 0.75;
+  background: linear-gradient(180deg, #eef3ff, #fafcff);
+}
+
+/* Today and selected states */
+.day.is-today {
+  border-color: var(--blue-500);
+  box-shadow: 0 0 0 2px rgba(47, 111, 237, 0.20) inset, 0 6px 18px rgba(47,111,237,0.08);
+}
+
+.day.is-selected {
+  background: linear-gradient(180deg, var(--blue-500), var(--blue-600));
+  border-color: var(--blue-600);
+  color: #72f059;
+  box-shadow: 0 10px 24px rgba(47, 111, 237, 0.28);
+}
+.day.is-selected .day__num,
+.day.is-selected .dot { color: rgb(232, 229, 229); }
+.day.is-selected .dot { background: rgb(247, 30, 30); }
+
+.day__events {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--blue-600);
+  display: inline-block;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.06);
+}
+
+/* Schedule panel */
+.schedule__title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.schedule__title-text {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 900;
+}
+.schedule__title-date {
+  margin: 0;
+  opacity: 0.9;
+  font-weight: 700;
+}
+
+/* Events list */
+.schedule__content {
+  display: grid;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.events {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.event {
+  position: relative;
+  display: grid;
+  grid-template-columns: 96px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px 12px 16px;
+  border: 1px solid rgba(47,111,237,0.2);
+  background: linear-gradient(180deg, var(--blue-100), var(--blue-50));
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+}
+/* Accent bar */
+.event::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 6px;
+  border-radius: 6px 0 0 6px;
+  background: linear-gradient(180deg, var(--blue-500), var(--blue-600));
+}
+
+.event__time {
+  font-weight: 900;
+  color: var(--blue-800);
+}
+.event__title {
+  margin: 0;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.event__actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Form */
+.schedule__form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  background: rgba(227, 238, 255, 0.7);
+  border: 1px solid rgba(47,111,237,0.22);
+  box-shadow: var(--shadow-sm);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.form-row {
+  display: grid;
+  gap: 6px;
+}
+.form-row label {
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--blue-800);
+}
+.input {
+  appearance: none;
+  background: #fff;
+  border: 2px solid rgba(47,111,237,0.22);
+  color: var(--ink);
+  border-radius: 12px;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.input:hover { background: #fff; }
+.input:focus {
+  border-color: var(--blue-500);
+  box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.25);
+}
+
+/* Icon buttons (month nav, delete) */
+.icon-btn {
+  height: 40px;
+  width: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, var(--blue-100), var(--blue-50));
+  color: var(--blue-600);
+  border: 1px solid rgba(47,111,237,0.22);
+  cursor: pointer;
+  transition: transform .06s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease, color .2s ease;
+  box-shadow: 0 3px 10px rgba(47,111,237,0.15);
+}
+.icon-btn:hover {
+  background: linear-gradient(180deg, var(--blue-150), var(--blue-75));
+  border-color: var(--blue-400);
+  color: #0e3da5;
+}
+.icon-btn:active { transform: translateY(1px); }
+.icon-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.25);
+}
+
+/* Primary/secondary buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(47,111,237,0.24);
+  background: linear-gradient(180deg, var(--blue-100), var(--blue-50));
+  color: var(--ink);
+  cursor: pointer;
+  font-weight: 900;
+  transition: transform .06s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease, color .15s ease;
+  box-shadow: 0 6px 16px rgba(47,111,237,0.14);
+}
+.btn:hover {
+  background: linear-gradient(180deg, var(--blue-150), var(--blue-75));
+  border-color: var(--blue-400);
+  color: #0d2e7a;
+}
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.25);
+}
+
+.btn--primary {
+  background: linear-gradient(180deg, var(--blue-500), var(--blue-600));
+  color: white;
+  border-color: rgba(17,66,178,0.35);
+}
+.btn--primary:hover {
+  background: linear-gradient(180deg, var(--blue-600), #1548c2);
+}
+.btn--ghost {
+  background: transparent;
+  border-color: rgba(47,111,237,0.24);
+}
+.btn--ghost:hover {
+  background: rgba(227, 238, 255, 0.6);
+  border-color: var(--blue-400);
+}
+.btn__icon { font-size: 20px; }
+
+/* Footer */
+.app__footer { margin-top: 20px; justify-content: flex-end; }
+
+/* Responsive tweaks */
+@media (max-width: 960px) {
+  .calendar__month { grid-template-columns: 40px 1fr 40px; }
+  .calendar__days { grid-auto-rows: minmax(88px, auto); }
+}
+@media (max-width: 720px) {
+  .icon-btn { height: 36px; width: 36px; border-radius: 10px; }
+  .calendar__days { grid-auto-rows: minmax(76px, auto); }
+  .event { grid-template-columns: 80px 1fr auto; }
+}
+@media (max-width: 480px) {
+  .calendar, .schedule { padding: 14px; }
+  .day { padding: 10px; }
+  .calendar__days { grid-auto-rows: minmax(64px, auto); }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
