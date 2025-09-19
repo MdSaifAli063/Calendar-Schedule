@@ -9,6 +9,8 @@ A clean, responsive calendar with a day schedule panel. Navigate months, select 
   <img src="https://img.shields.io/badge/Responsive-%F0%9F%93%B1-blue" alt="Responsive Badge">
 </p>
 
+![image](https://github.com/MdSaifAli063/Calendar-Schedule/blob/be916a18e7ec6d7d124279321ac0e11d9220c3d9/Screenshot%202025-09-20%20015438.png)
+
 ---
 
 ## ✨ Features
