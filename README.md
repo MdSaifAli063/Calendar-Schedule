@@ -120,7 +120,7 @@ The UI will work the same; only storage changes.
 ## 📸 Icon Suggestion
 
 You can keep the emoji in the title, or use Material Icons:
-
+ 
 <h1 class="app__title">
   <span class="material-icons" aria-hidden="true">calendar_month</span>
   Calendar
