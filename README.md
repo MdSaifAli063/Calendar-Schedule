@@ -125,7 +125,6 @@ You can keep the emoji in the title, or use Material Icons.
 
 MIT — free to use, modify, and share.
 
-
 ## 🙌 Credits
 
 Google Material Icons
