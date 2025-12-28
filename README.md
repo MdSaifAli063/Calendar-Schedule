@@ -121,7 +121,6 @@ The UI will work the same; only storage changes.
 
 You can keep the emoji in the title, or use Material Icons.
 
-
 ## 📝 License
 
 MIT — free to use, modify, and share.
