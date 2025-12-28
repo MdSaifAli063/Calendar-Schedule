@@ -32,7 +32,6 @@ A clean, responsive calendar with a day schedule panel. Navigate months, select 
 
 . ├─ index.html # Page markup ├─ style.css # Styles (white/blue theme + glass effect + green today) ├─ script.js # Calendar logic + LocalStorage API adapter └─ assets/ # (Optional) images like a hero background (e.g., /assets/hero.jpg)
 
-
 ---
 
 ## 🚀 Quick Start
